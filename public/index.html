@@ -16,15 +16,15 @@
   <hr class="w-25 pb-1" />
   <div class="row m-auto px-5">
     <div class="col-12 col-sm-5">
-      <form>
+      <form method="POST" action="/" id="form-crear">
         <div class="form-group text-center">
           <h5>Agregar Nuevo Usuario</h5>
           <hr class="bg-white w-50" />
           <div class="d-flex align-items-center justify-content-center">
             Nombre:
-            <input class="form-control d-inline mx-3" required />
+            <input type="text" class="form-control d-inline mx-3" id="nombre-crear" required>
             Balance:
-            <input class="form-control d-inline mx-3" required />
+            <input type="number" class="form-control d-inline mx-3" id="balance-crear" required />
             <button type="submit" class="btn btn-danger">Agregar</button>
           </div>
         </div>
@@ -145,6 +145,6 @@
   crossorigin="anonymous"></script>
 <script src="https://momentjs.com/downloads/moment.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="./js/app.js"></script>
+<script type="module" src="./js/app.js"></script>
 
 </html>
