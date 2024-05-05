@@ -23,7 +23,19 @@ const getTransferencias = async ( req, res) => {
     }
 }
 
+const getUsuarios = async ( req, res) => {
+    try {
+        const usuarios = await crud.leerUsuarios()
+        return res.json({usuarios})
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ ok : false})
+    }
+
+}
+
 export const bancoController = {
     crearUsuario,
-    getTransferencias
+    getTransferencias,
+    getUsuarios
 }

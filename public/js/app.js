@@ -2,26 +2,26 @@
 
 const formCrear = document.querySelector('#form-crear')
 
-
+// event listeners
 eventsListeners();
 function eventsListeners (){
     document.addEventListener('DOMContentLoaded', cargarTransferencias)
+    document.addEventListener('DOMContentLoaded', cargarUsuarios)
     formCrear.addEventListener('submit', crearUsuario);
 }
 
-
+//cargar transferencias
 function cargarTransferencias() {
-    axios.get('/usuarios')
+    axios.get('/transferencias')
         .then(({data}) => imprimirTransferencias(data.transferencias))
         .catch(e => console.log(e));
 }
 
 const imprimirTransferencias = (transferencias) =>{
-    const tabla = document.querySelector('#tabla-transferencias')
+    const tablaTransferencias = document.querySelector('#tabla-transferencias')
 
     transferencias.forEach(transferencia => {
         const tr = document.createElement('tr');
-        console.log(transferencia)
         const fecha = document.createElement('td');
         const emisor = document.createElement('td');
         const receptor = document.createElement('td');
@@ -36,11 +36,11 @@ const imprimirTransferencias = (transferencias) =>{
         tr.append(emisor)
         tr.append(receptor)
         tr.append(monto)
-        tabla.append(tr)
+        tablaTransferencias.append(tr)
     });
 }
 
-
+//crear usuario
 function crearUsuario (e){
     e.preventDefault();
     
@@ -61,3 +61,27 @@ const postAxios = async (nombre, saldo) => {
 }
 
 
+
+// lista de usuarios
+
+function cargarUsuarios() {
+    axios.get('/usuarios')
+        .then(({data}) => imprimirUsuarios(data.usuarios))
+        .catch(e => console.log(e));
+}
+
+const imprimirUsuarios = (usuarios) => {
+    const tablaUsuarios = document.querySelector('#tabla-usuarios')
+    usuarios.forEach(usuario => {
+        const tr = document.createElement('tr');
+        const nombre = document.createElement('td');
+        const balance = document.createElement('td');
+
+        nombre.textContent = usuario.nombre;
+        balance.textContent = usuario.saldo;
+
+        tr.append(nombre);
+        tr.append(balance);
+        tablaUsuarios.append(tr)
+    });
+}
