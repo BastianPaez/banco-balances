@@ -18,8 +18,37 @@ const leerUsuarios = async () => {
     return rows
 }
 
-export const crud = {
+
+const transferirSaldo = async (nombreOrigen, nombreDestino, monto) => {
+    try {
+        await pool.query('BEGIN');
+
+        const queryUdateOrigen = 'UPDATE usuarios SET saldo = saldo - $1 WHERE nombre = $2';
+        await pool.query(queryUdateOrigen, [monto, nombreOrigen]);
+
+        const queryUpdateDestino = 'UPDATE usuarios SET saldo = saldo + $1 WHERE nombre = $2';
+        await pool.query(queryUpdateDestino, [monto, nombreDestino]);
+
+        const queryInsertTransferencia = 'INSERT INTO transferencias (nombre_usuario_origen, nombre_usuario_destino, monto_transferido)VALUES ($1, $2, $3)';
+
+        await pool.query(queryInsertTransferencia, [nombreOrigen, nombreDestino, monto]);
+
+        await pool.query('COMMIT');
+
+        return true
+        
+    } catch (error) {
+        await pool.query('ROLLBACK');
+        console.error('Error al realizar la transferencia:', error);
+        return false;
+    }
+
+
+}
+
+export const model = {
     crear,
     leerTransferencias,
-    leerUsuarios
+    leerUsuarios,
+    transferirSaldo
 }

@@ -8,5 +8,7 @@ const router = Router();
 router.post('/',bancoController.crearUsuario);
 router.get('/transferencias',bancoController.getTransferencias);
 router.get('/usuarios', bancoController.getUsuarios);
+router.put('/', bancoController.transferir)
+
 
 export default router;
