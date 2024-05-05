@@ -13,7 +13,17 @@ const crearUsuario = async (req, res) => {
     }
 }
 
+const getTransferencias = async ( req, res) => {
+    try {
+        const transferencias = await crud.leerTransferencias()
+        return res.json({transferencias})
+    } catch (error){
+        console.log(error);
+        return res.status(500).json({ ok : false})
+    }
+}
 
 export const bancoController = {
-    crearUsuario
+    crearUsuario,
+    getTransferencias
 }
